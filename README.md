@@ -1,4 +1,4 @@
-# Customer Onboarding — LangGraph + Swytchcode
+# Customer Onboarding - LangGraph + Swytchcode
 
 Automates the full customer onboarding flow:
 1. Creates a HubSpot contact
