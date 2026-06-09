@@ -94,7 +94,7 @@ app = workflow.compile()
 if __name__ == "__main__":
     result = app.invoke({
         "customer_name":      "Jane Doe",
-        "customer_email":     "lkomrawat@gmail.com",
+        "customer_email":     os.environ["CUSTOMER_EMAIL"],
         "stripe_customer_id": None,
         "hubspot_contact_id": None,
         "email_sent":         None,
