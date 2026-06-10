@@ -2,19 +2,19 @@
 
 A LangGraph agent that onboards a new customer across HubSpot, Stripe, and Resend in one run.
 
-> Run one command to create the CRM contact, the billing record, and the welcome email for a new signup. No API glue code, no credential juggling, no retry logic to maintain.
+> Run one command to create the CRM contact, the billing record, and the welcome email for a new signup, without writing API glue code or managing credentials and retries.
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue?style=flat-square)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/swytchcodehq/Customer-Onboarding-Langgraph?style=flat-square)](https://github.com/swytchcodehq/Customer-Onboarding-Langgraph/commits)
 
-## What This Does
+## What this does
 
 This demo runs the three steps a new signup usually triggers. It creates a HubSpot contact, creates a Stripe customer linked back to that contact, and sends a welcome email through Resend. The steps run as a LangGraph state machine, so the HubSpot contact ID flows into the Stripe record as metadata.
 
 Every external call goes through [Swytchcode](https://www.swytchcode.com/), a deterministic API execution layer for AI agents. The agent code never calls HubSpot, Stripe, or Resend directly. It asks the Swytchcode runtime to run a named method, and the runtime validates the request against a schema registry of 2,000+ integrations, handles auth and retries, and records an audit trail of what ran.
 
-## How It Works
+## How it works
 
 The graph has three nodes and runs them in order:
 
@@ -29,7 +29,7 @@ create_hubspot_contact -> create_stripe_customer -> send_welcome_email
 ## Prerequisites
 
 - **Python 3.9+**
-- **Swytchcode CLI.** Install with the verified script for your platform:
+- **Swytchcode CLI:** install with the verified script for your platform:
 
   Linux / macOS:
   ```bash
@@ -61,7 +61,7 @@ create_hubspot_contact -> create_stripe_customer -> send_welcome_email
    swytchcode bootstrap
    ```
 
-## Environment Variables
+## Environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -79,7 +79,7 @@ The demo uses a sample customer name (`Jane Doe`) defined in `main.py`. The emai
 python main.py
 ```
 
-## Expected Output
+## Expected output
 
 The script prints each node as it runs and a summary at the end:
 
@@ -99,7 +99,7 @@ Customer onboarding complete!
 
 After a run you should see a new contact in HubSpot, a matching customer in Stripe with the HubSpot contact ID in its metadata, and a welcome email in the customer inbox.
 
-## Canonical IDs Used
+## Canonical IDs used
 
 | Service | Canonical ID |
 |---------|--------------|
