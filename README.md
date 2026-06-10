@@ -69,7 +69,7 @@ create_hubspot_contact -> create_stripe_customer -> send_welcome_email
 | `STRIPE_SECRET_KEY` | Yes | Stripe secret key (`sk_test_...`). |
 | `RESEND_API_KEY` | Yes | Resend API key (`re_...`). |
 | `CUSTOMER_EMAIL` | Yes | Email the demo onboards and sends the welcome message to. |
-| `SWYTCHCODE_TOKEN` | Yes | Swytchcode auth token. Run `swytchcode whoami` to get yours. |
+| `SWYTCHCODE_TOKEN` | Yes | Swytchcode auth token, from the [Swytchcode dashboard](https://swytchcode.com) under Settings, API keys. |
 
 The demo uses a sample customer name (`Jane Doe`) defined in `main.py`. The email comes from `CUSTOMER_EMAIL`. Edit `main.py` to onboard a different customer.
 
