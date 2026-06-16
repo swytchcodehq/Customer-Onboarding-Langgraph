@@ -31,13 +31,7 @@ create_hubspot_contact -> create_stripe_customer -> send_welcome_email
 - **Python 3.9+**
 - **Swytchcode CLI:** install with the verified script for your platform:
 
-  Linux / macOS:
-  ```bash
-  curl -fsSL https://cli.swytchcode.com/install.sh | sh
-  ```
-  Windows (PowerShell):
-  ```powershell
-  irm https://cli.swytchcode.com/install.ps1 | iex
+  npm install -g swytchcode
   ```
 - A **HubSpot** private app token, a **Stripe** secret key, and a **Resend** API key (see the table below).
 
