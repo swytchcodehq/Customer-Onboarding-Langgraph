@@ -43,8 +43,9 @@ python main.py
 
 ## Canonical IDs Used
 
-| Service | Canonical ID                  |
-|---------|-------------------------------|
-| HubSpot | `crm.v3.contacts.create`      |
-| Stripe  | `customers.customer.create`   |
-| Resend  | `emails.email.create`         |
+| Service | Canonical ID |
+|---------|--------------|
+| Stripe | `customers.customer.create` |
+| Hubspot | `hubspot.crm.contacts.create` |
+| Resend | `resend.email.create` |
+
