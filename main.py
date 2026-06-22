@@ -24,7 +24,7 @@ class OnboardingState(TypedDict):
 def create_hubspot_contact(state: OnboardingState) -> dict:
     print(f"[1/3] Creating HubSpot contact for {state['customer_email']}...")
     name_parts = state["customer_name"].split()
-    result = swytchcode_exec("crm.v3.contacts.create", {
+    result = swytchcode_exec("hubspot.crm.contacts.create", {
         "body": {
             "properties": {
                 "email":          state["customer_email"],
@@ -35,7 +35,14 @@ def create_hubspot_contact(state: OnboardingState) -> dict:
         },
         "Authorization": f"Bearer {os.environ['HUBSPOT_API_KEY']}",
     })
-    contact_id = (result or {}).get("data", {}).get("id")
+    if result.get("status_code") == 409 and "Existing ID:" in result.get("data", {}).get("message", ""):
+        msg = result["data"]["message"]
+        contact_id = msg.split("Existing ID: ")[1].split()[0]
+    elif result.get("status_code") not in (200, 201):
+        raise RuntimeError(f"HubSpot contact create failed: {result}")
+    else:
+        contact_id = (result or {}).get("id") or (result or {}).get("data", {}).get("id")
+        
     print(f"    ✔ HubSpot contact created: {contact_id}")
     return {"hubspot_contact_id": contact_id}
 
@@ -52,6 +59,8 @@ def create_stripe_customer(state: OnboardingState) -> dict:
         },
         "Authorization": f"Bearer {os.environ['STRIPE_SECRET_KEY']}",
     })
+    if (result or {}).get("error"):
+        raise RuntimeError(f"Stripe customer create failed: {result['error']}")
     stripe_customer_id = (result or {}).get("data", {}).get("id")
     print(f"    ✔ Stripe customer created: {stripe_customer_id}")
     return {"stripe_customer_id": stripe_customer_id}
@@ -61,7 +70,7 @@ def create_stripe_customer(state: OnboardingState) -> dict:
 
 def send_welcome_email(state: OnboardingState) -> dict:
     print(f"[3/3] Sending welcome email to {state['customer_email']}...")
-    swytchcode_exec("emails.email.create", {
+    result = swytchcode_exec("resend.email.create", {
         "body": {
             "from":    "onboarding@resend.dev",
             "to":      [state["customer_email"]],
@@ -70,6 +79,8 @@ def send_welcome_email(state: OnboardingState) -> dict:
         },
         "Authorization": f"Bearer {os.environ['RESEND_API_KEY']}",
     })
+    if (result or {}).get("error"):
+        raise RuntimeError(f"Resend email send failed: {result['error']}")
     print(f"    ✔ Welcome email sent")
     return {"email_sent": True}
 
@@ -93,7 +104,7 @@ app = workflow.compile()
 
 if __name__ == "__main__":
     result = app.invoke({
-        "customer_name":      "Jane Doe",
+        "customer_name":      os.environ.get("CUSTOMER_NAME", "Jane Doe"),
         "customer_email":     os.environ["CUSTOMER_EMAIL"],
         "stripe_customer_id": None,
         "hubspot_contact_id": None,
@@ -104,4 +115,3 @@ if __name__ == "__main__":
     print(f"   HubSpot Contact ID:  {result['hubspot_contact_id']}")
     print(f"   Stripe Customer ID:  {result['stripe_customer_id']}")
     print(f"   Welcome email sent:  {result['email_sent']}")
-

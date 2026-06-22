@@ -417,7 +417,7 @@ METHODS:
         STATUS: 500
         WHEN: HTTP default
     CANONICAL_ID: crm.v3.contacts.list
-  crm.v3.contacts.create:
+  hubspot.crm.contacts.create:
     SUMMARY: Create
     DESC: Create a contact with the given properties and return a copy of the object, including the ID. Documentation and examples for creating standard contacts is provided.
     HTTP:
@@ -453,7 +453,7 @@ METHODS:
       - TYPE: ANY
         STATUS: 500
         WHEN: HTTP default
-    CANONICAL_ID: crm.v3.contacts.create
+    CANONICAL_ID: hubspot.crm.contacts.create
   crm.v3.search.create:
     SUMMARY: Perform operation post-/crm/v3/objects/contacts/search
     HTTP:

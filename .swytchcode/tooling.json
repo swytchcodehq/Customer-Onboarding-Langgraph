@@ -1,19 +1,19 @@
 {
   "editor": "none",
   "integrations": {
-    "hubspot.hubspot_com_crm_contacts_3_json": {
-      "version": "3"
-    },
-    "resend.resend": {
+    "resend.resend_api": {
       "version": "v1.5.0"
     },
-    "stripe.stripe_sdk": {
+    "stripe.stripe_api": {
       "version": "2026-02-25.clover"
+    },
+    "hubspot.hubspot_com_crm_contacts_3_json": {
+      "version": "3"
     }
   },
   "mode": "production",
   "tools": {
-    "crm.v3.contacts.create": {
+    "hubspot.crm.contacts.create": {
       "desc": "Create a contact with the given properties and return a copy of the object, including the ID.",
       "inputs": [
         {
@@ -68,7 +68,7 @@
       "summary": "Create a HubSpot contact",
       "type": "method"
     },
-    "emails.email.create": {
+    "resend.email.create": {
       "desc": "Send an email",
       "inputs": [
         {

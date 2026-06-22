@@ -3,7 +3,7 @@ DEFAULTS:
   bearer_token: BEARER <TOKEN>
   w_base_url: https://api.resend.com
 METHODS:
-  emails.email.create:
+  resend.email.create:
     SUMMARY: Send an email
     HTTP:
       METHOD: POST
@@ -35,7 +35,7 @@ METHODS:
       - RETURNTYPE: STRUCT(SendEmailResponse)
         RETURNVAR: emails_email_create
         STATUS: 200
-    CANONICAL_ID: emails.email.create
+    CANONICAL_ID: resend.email.create
   emails.email.list:
     SUMMARY: Retrieve a list of emails
     HTTP:
